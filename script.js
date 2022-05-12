@@ -1,11 +1,19 @@
 const board = document.querySelector(".board");
-const boardSize = 960;
+const boardSize = 540;
 const boardInput = document.querySelector("#board-input");
 const boardBtn = document.querySelector("#grid-btn");
 boardBtn.addEventListener("click", () => {
     createBoard(boardInput.value);
 });
 
+createBoard(16);
+const cells = document.querySelectorAll(".cell");
+for (cell of cells) {
+    cell.addEventListener("hover", () => {
+        console.log(this);
+    })
+}
+//'#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6)
 function createBoard(cellAmount) {
     if (board.children.length !== 0) deleteGrid();
     createGrid(cellAmount);
