@@ -19,7 +19,10 @@ function addCellHoverEffects() {
 
 function changeCellColor(cell) {
     let randomColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+    // .match(/\d+/)[0]
     cell.style.backgroundColor = randomColor;
+    let cellSaturation = cell.style.filter.match(/\d+/)[0];
+    cell.style.filter = `saturate(${cellSaturation - 10}%)`;
 }
 function createBoard(cellAmount) {
     if (board.children.length !== 0) deleteGrid();
@@ -38,6 +41,7 @@ function createGrid(cellAmount) {
         for (let col = 0; col < cellAmount; col++) {
             const cell = document.createElement("div");
             cell.className = "cell";
+            cell.style.filter = "saturate(110%)";
             personalizeCell(cell, cellSize);
             rowDiv.appendChild(cell);
         }
