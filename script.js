@@ -1,7 +1,15 @@
 const board = document.querySelector(".board");
 const boardSize = 960;
 const boardInput = document.querySelector("#board-input");
-boardInput.addEventListener("change", createGrid(boardInput.value));
+const boardBtn = document.querySelector("#grid-btn");
+boardBtn.addEventListener("click", () => {
+    createBoard(boardInput.value);
+});
+
+function createBoard(cellAmount) {
+    if (board.children.length !== 0) deleteGrid();
+    createGrid(cellAmount);
+}
 
 function createGrid(cellAmount) {
     let cellSize = boardSize / cellAmount;
@@ -25,9 +33,12 @@ function createGrid(cellAmount) {
 function personalizeCell(cell, cellSize) {
     cell.style.width = `${cellSize}px`;
     cell.style. height = `${cellSize}px`;
-    cell.style.outline = "black solid 1px";
+    cell.style.outline = "black solid 0.1px";
 }
 
-function removeGrid() {
-
+function deleteGrid() {
+    const rows = board.children;
+    while (rows.length != 0) {
+        board.removeChild(rows[0]);
+    };
 }
