@@ -7,16 +7,24 @@ boardBtn.addEventListener("click", () => {
 });
 
 createBoard(16);
-const cells = document.querySelectorAll(".cell");
-for (cell of cells) {
-    cell.addEventListener("hover", () => {
-        console.log(this);
-    })
+
+function addCellHoverEffects() {
+    const cells = document.querySelectorAll(".cell");
+    for (cell of cells) {
+        cell.addEventListener("mouseover", (e) => {
+            changeCellColor(e.target);
+        })
+    };
 }
-//'#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6)
+
+function changeCellColor(cell) {
+    let randomColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+    cell.style.backgroundColor = randomColor;
+}
 function createBoard(cellAmount) {
     if (board.children.length !== 0) deleteGrid();
     createGrid(cellAmount);
+    addCellHoverEffects();
 }
 
 function createGrid(cellAmount) {
