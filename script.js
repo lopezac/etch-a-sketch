@@ -1,29 +1,19 @@
 const board = document.querySelector(".board");
 const boardSize = 540;
-const boardInput = document.querySelector("#board-input");
-const boardBtn = document.querySelector("#grid-btn");
-boardBtn.addEventListener("click", () => {
-    createBoard(boardInput.value);
+const gridSizeInput = document.querySelector("#grid-size");
+const rangeState = document.querySelector(".range-state");
+gridSizeInput.addEventListener("change", () => {
+    changeGridSize(gridSizeInput);
 });
 
-createBoard(16);
+changeGridSize(gridSizeInput);
 
-function addCellHoverEffects() {
-    const cells = document.querySelectorAll(".cell");
-    for (cell of cells) {
-        cell.addEventListener("mouseover", (e) => {
-            changeCellColor(e.target);
-        })
-    };
+function changeGridSize(gridSize) {
+    rangeState.textContent = gridSize.value;
+    createBoard(gridSize.value);
 }
 
-function changeCellColor(cell) {
-    let randomColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
-    // .match(/\d+/)[0]
-    cell.style.backgroundColor = randomColor;
-    let cellSaturation = cell.style.filter.match(/\d+/)[0];
-    cell.style.filter = `saturate(${cellSaturation - 10}%)`;
-}
+// createBoard(16);
 function createBoard(cellAmount) {
     if (board.children.length !== 0) deleteGrid();
     createGrid(cellAmount);
@@ -37,7 +27,7 @@ function createGrid(cellAmount) {
     for (let row = 0; row < cellAmount; row++) {
         const rowDiv = document.createElement("div");
         rowDiv.className = "row";
-
+        
         for (let col = 0; col < cellAmount; col++) {
             const cell = document.createElement("div");
             cell.className = "cell";
@@ -61,4 +51,21 @@ function deleteGrid() {
     while (rows.length != 0) {
         board.removeChild(rows[0]);
     };
+}
+
+function addCellHoverEffects() {
+    const cells = document.querySelectorAll(".cell");
+    for (cell of cells) {
+        cell.addEventListener("mouseover", (e) => {
+            changeCellColor(e.target);
+        })
+    };
+}
+
+function changeCellColor(cell) {
+    let randomColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+    // .match(/\d+/)[0]
+    cell.style.backgroundColor = randomColor;
+    let cellSaturation = cell.style.filter.match(/\d+/)[0];
+    cell.style.filter = `saturate(${cellSaturation - 10}%)`;
 }
