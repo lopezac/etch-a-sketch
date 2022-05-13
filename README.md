@@ -1,0 +1,2 @@
+This the [Etch-a-Sketch](https://www.theodinproject.com/lessons/foundations-etch-a-sketch) project from [The Odin Project](https://www.theodinproject.com).
+Click [here](https://lopezac.github.io/etch-a-sketch/index.html) to use it.
