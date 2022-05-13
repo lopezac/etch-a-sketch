@@ -1,7 +1,7 @@
 const board = document.querySelector(".board");
-const boardSize = 540;
+const boardSize = 505;
 const gridSizeInput = document.querySelector("#grid-size");
-const rangeState = document.querySelector(".range-state");
+const rangeState = document.querySelector(".range-state > p");
 
 const saturateBtn = document.querySelector("#saturate-btn");
 const randomColorsBtn = document.querySelector("#random-colors");
@@ -61,7 +61,7 @@ function createGrid(cellAmount) {
 function personalizeCell(cell, cellSize) {
     cell.style.width = `${cellSize}px`;
     cell.style. height = `${cellSize}px`;
-    cell.style.outline = "black solid 0.1px";
+
 }
 
 function deleteGrid() {
