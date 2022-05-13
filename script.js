@@ -6,12 +6,18 @@ const rangeState = document.querySelector(".range-state");
 const saturateBtn = document.querySelector("#saturate-btn");
 const randomColorsBtn = document.querySelector("#random-colors");
 const pencilColor = document.querySelector("#pencil-color");
+const singleRandomColor = document.querySelector("#single-random-color");
+const eraserBtn = document.querySelector("#eraser");
+
 let singleColor = true;
 let randomColors = false;
 let saturation = false;
+let eraserActivated = false;
 
 randomColorsBtn.addEventListener("click", toggleRandomColors);
-saturateBtn.addEventListener("click", toggleSaturation)
+saturateBtn.addEventListener("click", toggleSaturation);
+eraserBtn.addEventListener("click", toggleEraser);
+singleRandomColor.addEventListener("click", toggleSingleRandomColor);
 
 gridSizeInput.addEventListener("change", () => {
     changeGridSize(gridSizeInput);
@@ -79,14 +85,13 @@ function changeCellColor(cell) {
         paintCell(cell, pencilColor.value);
     } else if (randomColors) {
         paintCell(cell, getRandomColor());
+    } else if (eraserActivated) {
+        paintCell(cell, "white");
     }
 
     if (saturation) {
         saturateCell(cell);
     }
-    // let randomColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
-    // .match(/\d+/)[0]
-    // cell.style.backgroundColor = randomColor;
 }
 
 function paintCell(cell, color) {
@@ -114,4 +119,21 @@ function toggleRandomColors() {
 
 function toggleSaturation() {
     saturation = (saturation) ? false : true;
+}
+
+function toggleEraser() {
+    if (eraserActivated) {
+        eraserActivated = false;
+        singleColor = true;
+    } else {
+        eraserActivated = true;
+        singleColor = false;
+        randomColors = false;
+    }
+}
+
+function toggleSingleRandomColor() {
+    pencilColor.value = getRandomColor();
+    randomColors = false;
+    singleColor = true;
 }
