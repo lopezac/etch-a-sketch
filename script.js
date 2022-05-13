@@ -2,9 +2,21 @@ const board = document.querySelector(".board");
 const boardSize = 540;
 const gridSizeInput = document.querySelector("#grid-size");
 const rangeState = document.querySelector(".range-state");
+
+const saturateBtn = document.querySelector("#saturate-btn");
+const randomColorsBtn = document.querySelector("#random-colors");
+const pencilColor = document.querySelector("#pencil-color");
+let singleColor = true;
+let randomColors = false;
+let saturation = false;
+
+randomColorsBtn.addEventListener("click", toggleRandomColors);
+saturateBtn.addEventListener("click", toggleSaturation)
+
 gridSizeInput.addEventListener("change", () => {
     changeGridSize(gridSizeInput);
 });
+
 
 changeGridSize(gridSizeInput);
 
@@ -31,7 +43,7 @@ function createGrid(cellAmount) {
         for (let col = 0; col < cellAmount; col++) {
             const cell = document.createElement("div");
             cell.className = "cell";
-            cell.style.filter = "saturate(110%)";
+            cell.style.filter = "saturate(100%)";
             personalizeCell(cell, cellSize);
             rowDiv.appendChild(cell);
         }
@@ -63,9 +75,43 @@ function addCellHoverEffects() {
 }
 
 function changeCellColor(cell) {
-    let randomColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+    if (singleColor) {
+        paintCell(cell, pencilColor.value);
+    } else if (randomColors) {
+        paintCell(cell, getRandomColor());
+    }
+
+    if (saturation) {
+        saturateCell(cell);
+    }
+    // let randomColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
     // .match(/\d+/)[0]
-    cell.style.backgroundColor = randomColor;
+    // cell.style.backgroundColor = randomColor;
+}
+
+function paintCell(cell, color) {
+    cell.style.backgroundColor = color;
+}
+
+function saturateCell(cell) {
     let cellSaturation = cell.style.filter.match(/\d+/)[0];
     cell.style.filter = `saturate(${cellSaturation - 10}%)`;
+}
+
+function getRandomColor() {
+    return '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+}
+
+function toggleRandomColors() {
+    if (singleColor) {
+        randomColors = true;
+        singleColor = false;
+    } else {
+        randomColors = false;
+        singleColor = true;
+    }
+}
+
+function toggleSaturation() {
+    saturation = (saturation) ? false : true;
 }
